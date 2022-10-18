@@ -1,0 +1,3 @@
+<personFlow id="1o4o" begin="1" period="15">
+    <walk edges="1o 4o" arrivalPos="0"/>
+</personFlow>

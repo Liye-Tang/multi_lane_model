@@ -1,0 +1,64 @@
+syntax = "proto3";
+package idc_planner.pb;
+
+// Next Available ID: 11
+message IdcPlannerInfo {
+  string task = 1;  
+  string traffic_light = 2; 
+  int64 timestamp = 3;  
+  Decision decision = 4;  
+  EgoState ego_state = 5;  
+  repeated OtherState other_state = 6;  
+  repeated InputVector obs_vector = 7;  
+  repeated InputVector mask_vector = 8;
+  repeated InputVector attn_vector = 9;
+  repeated TrajPose traj_pose = 10;
+}
+
+message InputVector {
+  repeated double input_vector = 1;
+}
+
+// Next Available ID: 10
+message Decision {  
+  bool is_safe = 1;  
+  int64 selected_path_idx = 2;  
+  repeated double path_value = 3;
+  double safety_shield_time_ns = 4;
+  double decision_time_ns = 5;  
+  double normalized_front_wheel = 6;  
+  double normalized_acc = 7;  
+  double normalized_front_wheel_clamp = 8;  
+  double normalized_acc_clamp = 9;
+}
+
+// Next Available ID: 7
+message EgoState {  
+  double v_x = 1;  
+  double v_y = 2;  
+  double r = 3;  
+  double x = 4;  
+  double y = 5;  
+  double phi = 6;
+}
+
+// Next Available ID: 8
+message OtherState {  
+  double l = 1;  
+  double w = 2;  
+  double x = 3;  
+  double y = 4;  
+  double v = 5;  
+  double phi = 6;  
+  string type = 7;
+}
+
+// Next Available ID: 7
+message TrajPose {  
+  double x = 1;  
+  double y = 2;  
+  double v = 3;  
+  double phi = 4; 
+  double normalized_front_wheel = 5;   
+  double normalized_acc = 6;  
+}

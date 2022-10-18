@@ -1,0 +1,22 @@
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+
+    <person id="0" depart="4" color="yellow" departPos="160">
+        <walk edges="1o 3i"/>
+    </person>
+    <person id="1" depart="4" color="yellow" departPos="160">
+        <walk edges="1o 3i"/>
+    </person>
+    <person id="2" depart="4" color="yellow" departPos="160">
+        <walk edges="1o 3i"/>
+    </person>
+    <person id="3" depart="8" color="yellow" departPos="150">
+        <walk edges="2o 1o"/>
+    </person>
+    <person id="4" depart="8" color="yellow" departPos="150">
+        <walk edges="2o 1o"/>
+    </person>
+    <person id="5" depart="8" color="yellow" departPos="150">
+        <walk edges="2o 1o"/>
+    </person>
+
+</routes>

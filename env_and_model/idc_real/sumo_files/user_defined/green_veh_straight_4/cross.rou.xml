@@ -1,0 +1,69 @@
+<routes>
+    <vType id="car_1" length="4.8" width="2.0" accel="2.6" decel="4.5" apparentDecel="4.5" emergencyDecel="4.5"
+           sigma="0.5" tau="1" minGap="4.5" maxSpeed="4" speedDev="0" color="red" vClass="passenger"
+           guiShape="passenger" impatience="0" laneChangeModel="LC2013" carFollowModel="Krauss" latAlignment="center"
+           minGapLat="0.1" jmCrossingGap="4" maxSpeedLat="1"/>
+    <vType id="car_2" length="4.8" width="2.0" accel="2.6" decel="4.5" apparentDecel="4.5" emergencyDecel="4.5"
+           sigma="0.5" tau="1" minGap="4.5" maxSpeed="4" speedDev="0" color="255,255,0" vClass="passenger"
+           guiShape="passenger" impatience="0" laneChangeModel="LC2013" carFollowModel="Krauss" latAlignment="center"
+           minGapLat="0.1" jmCrossingGap="4" maxSpeedLat="1"/>
+    <vType id="car_3" length="4.8" width="2.0" accel="2.6" decel="4.5" apparentDecel="4.5" emergencyDecel="4.5"
+           sigma="0.5" tau="1" minGap="4.5" maxSpeed="4" speedDev="0" color="255,255,255,186" vClass="passenger"
+           guiShape="passenger" impatience="0" laneChangeModel="LC2013" carFollowModel="Krauss" latAlignment="center"
+           minGapLat="0.1" jmCrossingGap="4" maxSpeedLat="1"/>
+    <vType id="car_4" length="4.8" width="2.0" accel="2.6" decel="4.5" apparentDecel="4.5" emergencyDecel="4.5"
+           sigma="0.5" tau="1" minGap="10.5" maxSpeed="4" speedDev="0" color="255,255,0" vClass="passenger"
+           guiShape="passenger" impatience="0" laneChangeModel="LC2013" carFollowModel="Krauss" latAlignment="center"
+           minGapLat="0.1" jmCrossingGap="4" maxSpeedLat="1"/>
+    <vType id="bicycle_1" length="2" width="0.48" minGap="1" maxSpeed="2.5" vClass="bicycle" jmCrossingGap="2" carFollowModel="Krauss" latAlignment="right" />
+    <vType id="bicycle_2" length="2" width="0.48" minGap="1" maxSpeed="2.5" vClass="bicycle" jmCrossingGap="2" carFollowModel="Krauss" latAlignment="arbitrary" />
+    <vType id="bicycle_3" length="2" width="0.48" minGap="1" maxSpeed="2.5" vClass="bicycle" jmCrossingGap="2" carFollowModel="Krauss" latAlignment="arbitrary" />
+    <vType id="self_car" length="5" width="1.8" accel="3.5" decel="2.2" sigma="1.0" guiShape="passenger/wagon"
+           color="1,0,1" jmCrossingGap="4" maxSpeed="4"/>
+    <vType id="vir_car" length="4.8" width="2.0" accel="2.6" decel="4.5" apparentDecel="4.5" emergencyDecel="4.5"
+       sigma="0.5" tau="1" minGap="4.5" maxSpeed="4" speedDev="0" color="white" vClass="passenger"
+       guiShape="passenger" impatience="0" laneChangeModel="LC2013" carFollowModel="Krauss" latAlignment="center"
+       minGapLat="0.1" jmCrossingGap="4" maxSpeedLat="1"/>
+
+    <route id="ru" edges="2o 3i"/>
+    <route id="rd" edges="2o 1i"/>
+    <route id="rl" edges="2o 4i"/>
+
+    <route id="lr" edges="4o 2i"/>
+    <route id="lu" edges="4o 3i"/>
+    <route id="ld" edges="4o 1i"/>
+
+    <route id="dl" edges="1o 4i"/>
+    <route id="dr" edges="1o 2i"/>
+    <route id="du" edges="1o 3i"/>
+
+    <route id="ud" edges="3o 1i"/>
+    <route id="ul" edges="3o 4i"/>
+    <route id="ur" edges="3o 2i"/>
+
+    <route id="circle" edges="a1toa2 a2toa3 a3toa4 a4toa1"/>
+    <vehicle id="circle_car" type="car_1" route="circle" depart="0"/>
+
+
+    <vehicle id="03" type="car_1" depart="0" route="ul" departLane="best"
+          departPos="110" departSpeed="random" number="1"/>
+
+    <vehicle id="00" type="car_1" depart="0" route="du" departLane="best"
+          departPos="140" departSpeed="random" number="1"/>
+
+    <vehicle id="01" type="car_1" depart="1" route="ur" departLane="best"
+             departPos="135" departSpeed="random" number="1"/>
+    <vehicle id="vir_car" type="vir_car" depart="3" route="du" departLane="best"
+             departPos="130" departSpeed="random" number="1"/>
+
+    <vehicle id="02" type="car_1" depart="4" route="ur" departLane="best"
+             departPos="125" departSpeed="random" number="1"/>
+
+
+
+    <vehicle id="05" type="car_1" depart="21" route="ru" departLane="best"
+          departPos="160" departSpeed="random" number="1"/>
+    <vehicle id="07" type="car_1" depart="21" route="ru" departLane="best"
+          departPos="160" departSpeed="random" number="1"/>
+
+</routes>
