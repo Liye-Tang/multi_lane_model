@@ -63,7 +63,7 @@ def built_AMPC_parser():
     parser.add_argument('--optimizer_type', type=str, default='offpolicy')
     parser.add_argument('--off_policy', type=str, default=True)
     parser.add_argument('--memo', type=str, default='')
-    parser.add_argument('--max_iter', type=int, default=100000)
+    parser.add_argument('--max_iter', type=int, default=1000000)
     known_args, _ = parser.parse_known_args(['max_iter'])
     max_iter = known_args.max_iter
     # env
