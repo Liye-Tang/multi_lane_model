@@ -19,11 +19,5 @@ from env_and_model.path_tracking.path_tracking_env import PathTrackingEnv, PathT
 from env_and_model.multi_lane.multilane import MultiLane
 from env_and_model.multi_lane.car_tracking.dynamics_and_models import MultiLaneModel
 
-Name2EnvAndModelCls = dict(aircraft=(AircraftEnv, AircraftModel),
-                           idc_real=(IdcRealEnv, IdcRealModel),
-                           idc_virtual=(IdcVirtualEnv, IdcVirtualModel),
-                           e2e=(E2eEnv, None),
-                           idc_virtual_veh=(IdcVirtualVehEnv, IdcVirtualVehModel),
-                           path_tracking=(PathTrackingEnv, PathTrackingModel),
-                           multi_lane=(MultiLane, MultiLaneModel))
+Name2EnvAndModelCls = dict(multi_lane=(MultiLane, MultiLaneModel))
 
