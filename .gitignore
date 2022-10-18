@@ -214,3 +214,5 @@ cython_debug/
 
 /results/
 /env_and_model/idc_virtual/data_and_plot/single_demo/
+
+.idea
