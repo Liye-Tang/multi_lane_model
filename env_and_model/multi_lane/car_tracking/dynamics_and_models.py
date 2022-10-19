@@ -110,17 +110,17 @@ class MultiLaneModel(object):
             steers, a_xs = actions[:, 0], actions[:, 1]
 
             # rewards related to tracking error
-            rew_devi_lateral = tf.cast(tf.square(obses_track[:, 0]), dtype=tf.float32)
-            rew_devi_phi = tf.cast(tf.square(obses_track[:, 1] * np.pi / 180.), dtype=tf.float32)
-            rew_devi_v = tf.cast(tf.square(obses_track[:, 2]), dtype=tf.float32)
+            rew_devi_lateral = -tf.cast(tf.square(obses_track[:, 0]), dtype=tf.float32)
+            rew_devi_phi = -tf.cast(tf.square(obses_track[:, 1] * np.pi / 180.), dtype=tf.float32)
+            rew_devi_v = -tf.cast(tf.square(obses_track[:, 2]), dtype=tf.float32)
 
             # rewards related to ego stability
-            punish_yaw_rate = -tf.square(obses_ego[:, 2])
+            punish_yaw_rate = tf.square(obses_ego[:, 2])
             punish_yaw_rate = tf.cast(punish_yaw_rate, tf.float32)
 
             # rewards related to action
-            punish_steer = -tf.square(steers)
-            punish_a_x = -tf.square(a_xs)
+            punish_steer = tf.square(steers)
+            punish_a_x = tf.square(a_xs)
             # punish_steer = tf.cast(punish_steer, tf.float64)
             # punish_a_x = tf.cast(punish_a_x, tf.float64)
 
@@ -169,10 +169,10 @@ class MultiLaneModel(object):
                 veh2line_2 = tf.sqrt(tf.square(ego_points[0] - x) + tf.square(ego_points[1] - y))
                 is_left_2 = judge_point_line_pos(ego_points, k, obses_closest_point[:, 0], obses_closest_point[:, 1])
 
-                # veh2line = tf.where(tf.abs(k) - 1000 > 0, veh2line_1, veh2line_2)
-                # is_left = tf.where(tf.abs(k) - 1000 > 0, is_left_1, is_left_2)
-                veh2line = veh2line_1
-                is_left = is_left_1
+                veh2line = tf.where(tf.abs(k) - 1000 > 0, veh2line_1, veh2line_2)
+                is_left = tf.where(tf.abs(k) - 1000 > 0, is_left_1, is_left_2)
+                # veh2line = veh2line_1
+                # is_left = is_left_1
 
 
                 left_dist = tf.where((0.5 + obses_left_lane[:, 0]) * obses_lane_width[:, 0] - veh2line - 1.25 < 0,
@@ -253,10 +253,8 @@ class MultiLaneModel(object):
         b = ref_points[:, 1] - k * ref_points[:, 0]
         x = (k * ys + xs - k * b) / (k ** 2 + 1)
         y = (k ** 2 * ys + k * xs + b) / (k ** 2 + 1)
-        cl_x = ref_points[:, 0]
-        cl_y = ys
-        # cl_x = tf.where(abs(k) > 1000, ref_points[:, 0], x)
-        # cl_y = tf.where(abs(k) > 1000, ys, y)
+        cl_x = tf.where(abs(k) > 1000, ref_points[:, 0], x)
+        cl_y = tf.where(abs(k) > 1000, ys, y)
         return tf.stack([cl_x, cl_y, ref_points[:, 2]], axis=1)
 
     def _compute_next_track_vector(self, next_obses_ego, next_obses_closest_point, next_obses_ref_v):

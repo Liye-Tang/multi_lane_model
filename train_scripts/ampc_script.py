@@ -142,9 +142,9 @@ def built_AMPC_parser():
     parser.add_argument('--punish_scale', type=float, default=None)
 
     # optimizer (PABAL)
-    parser.add_argument('--num_workers', type=int, default=1 if mode == 'debug' else 2)
-    parser.add_argument('--num_learners', type=int, default=2 if mode == 'debug' else 5)
-    parser.add_argument('--num_buffers', type=int, default=1 if mode == 'debug' else 2)
+    parser.add_argument('--num_workers', type=int, default=1 if mode == 'debug' else 1)
+    parser.add_argument('--num_learners', type=int, default=2 if mode == 'debug' else 2)
+    parser.add_argument('--num_buffers', type=int, default=1 if mode == 'debug' else 1)
     parser.add_argument('--max_weight_sync_delay', type=int, default=300)
     parser.add_argument('--grads_queue_size', type=int, default=25)
     parser.add_argument('--eval_interval', type=int, default=3000)
