@@ -183,12 +183,11 @@ class OffPolicyWorker(object):
     # def sample(self):
     #     batch_data = []
     #     reward_dict_list = []
-    #     for _ in range(int(self.sample_batch_size / self.num_agent)):
+    #     for _ in range(int(self.sample_batch_size)):
     #         reward_dict_list.append({})
-    #         for i in range(self.num_agent):
-    #             batch_data.append(
-    #                 (self.obs.copy(), 0, 0, 0, 0, 0)
-    #             )
+    #         batch_data.append(
+    #             (self.obs.copy(), 0, 0, 0, 0, 0)
+    #         )
     #         self.obs = self.env.reset()
     #
     #     if self.worker_id == 1 and self.sample_times % self.args.worker_log_interval == 0:
@@ -205,7 +204,7 @@ class OffPolicyWorker(object):
         for _ in range(int(self.sample_batch_size / self.num_agent)):
             processed_obs = self.preprocessor.process_obs(self.obs)
             judge_is_nan([processed_obs])
-            action, _ = self.policy_with_value.compute_action(self.tf.constant(processed_obs[np.newaxis, :]))
+            action, _ = self.policy_with_value.compute_action(self.tf.constant(processed_obs))
             if self.explore_sigma is not None:
                 action += np.random.normal(0, self.explore_sigma, np.shape(action))
             # try:
@@ -216,19 +215,20 @@ class OffPolicyWorker(object):
             #     action, logp = self.policy_with_value.compute_action(processed_obs)
             #     judge_is_nan([action])
             #     raise ValueError
-            obs_tp1, reward, done, info = self.env.step(action[0].numpy())
+            obs_tp1, reward, done, info = self.env.step(action.numpy()[0])
             # reward_dict_list.append(info['reward_dict'])
             punish = info['punish']
-            batch_data.append(
-                (self.obs.copy(), action.numpy(), reward,
-                 obs_tp1.copy(), done, punish))
+            for i in range(self.num_agent):
+                batch_data.append(
+                    (self.obs.copy(), action.numpy(), reward,
+                     obs_tp1.copy(), done, punish))
             # for multiagent env, we need to reset it every time
             self.obs = self.env.reset()
 
         if self.worker_id == 1 and self.sample_times % self.args.worker_log_interval == 0:
             logger.info('Worker_info: {}'.format(self.get_stats()))
-        # for k, _ in reward_dict_list[0].items():
-        #     self.stats[k + '_mean_data'] = self.tf.reduce_mean([reward_dict[k] for reward_dict in reward_dict_list])
+        for k, _ in reward_dict_list[0].items():
+            self.stats[k + '_mean_data'] = self.tf.reduce_mean([reward_dict[k] for reward_dict in reward_dict_list])
         self.num_sample += len(batch_data)
         self.sample_times += 1
         return batch_data
