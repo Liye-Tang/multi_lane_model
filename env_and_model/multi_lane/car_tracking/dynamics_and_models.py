@@ -115,12 +115,12 @@ class MultiLaneModel(object):
             rew_devi_v = -tf.cast(tf.square(obses_track[:, 2]), dtype=tf.float32)
 
             # rewards related to ego stability
-            punish_yaw_rate = tf.square(obses_ego[:, 2])
-            punish_yaw_rate = tf.cast(punish_yaw_rate, tf.float32)
+            punish_yaw_rate = -tf.square(obses_ego[:, 2])
+            punish_yaw_rate = -tf.cast(punish_yaw_rate, tf.float32)
 
             # rewards related to action
-            punish_steer = tf.square(steers)
-            punish_a_x = tf.square(a_xs)
+            punish_steer = -tf.square(steers)
+            punish_a_x = -tf.square(a_xs)
             # punish_steer = tf.cast(punish_steer, tf.float64)
             # punish_a_x = tf.cast(punish_a_x, tf.float64)
 

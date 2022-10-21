@@ -177,8 +177,7 @@ class OffPolicyWorker(object):
 
     def apply_gradients(self, iteration, grads):
         self.iteration = iteration
-        # self.policy_with_value.apply_gradients(self.tf.constant(iteration, dtype=self.tf.int32), grads)
-        self.policy_with_value.apply_gradients(iteration, grads)
+        self.policy_with_value.apply_gradients(self.tf.constant(iteration, dtype=self.tf.int32), grads)
 
     # def sample(self):
     #     batch_data = []
@@ -204,17 +203,9 @@ class OffPolicyWorker(object):
         for _ in range(int(self.sample_batch_size / self.num_agent)):
             processed_obs = self.preprocessor.process_obs(self.obs)
             judge_is_nan([processed_obs])
-            action, _ = self.policy_with_value.compute_action(self.tf.constant(processed_obs))
+            action, _ = self.policy_with_value.compute_action(self.tf.constant(processed_obs[np.newaxis, :]))
             if self.explore_sigma is not None:
                 action += np.random.normal(0, self.explore_sigma, np.shape(action))
-            # try:
-            #     judge_is_nan([action])
-            # except ValueError:
-            #     print('processed_obs', processed_obs)
-            #     print('policy_weights', self.policy_with_value.policy.trainable_weights)
-            #     action, logp = self.policy_with_value.compute_action(processed_obs)
-            #     judge_is_nan([action])
-            #     raise ValueError
             obs_tp1, reward, done, info = self.env.step(action.numpy()[0])
             # reward_dict_list.append(info['reward_dict'])
             punish = info['punish']

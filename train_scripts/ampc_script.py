@@ -89,9 +89,9 @@ def built_AMPC_parser():
     parser.add_argument('--num_rollout_for_policy_update', type=int, default=25)
     parser.add_argument('--gamma', type=float, default=1.)
     parser.add_argument('--gradient_clip_norm', type=float, default=3)
-    parser.add_argument('--init_punish_factor', type=float, default=0.)
+    parser.add_argument('--init_punish_factor', type=float, default=10.)
     parser.add_argument('--pf_enlarge_interval', type=int, default=20000)
-    parser.add_argument('--pf_amplifier', type=float, default=0.)
+    parser.add_argument('--pf_amplifier', type=float, default=1.)
 
     # worker
     parser.add_argument('--sample_batch_size', type=int, default=64 if mode == 'debug' else 512)
@@ -142,9 +142,9 @@ def built_AMPC_parser():
     parser.add_argument('--punish_scale', type=float, default=None)
 
     # optimizer (PABAL)
-    parser.add_argument('--num_workers', type=int, default=1 if mode == 'debug' else 1)
-    parser.add_argument('--num_learners', type=int, default=2 if mode == 'debug' else 2)
-    parser.add_argument('--num_buffers', type=int, default=1 if mode == 'debug' else 1)
+    parser.add_argument('--num_workers', type=int, default=1 if mode == 'debug' else 6)
+    parser.add_argument('--num_learners', type=int, default=2 if mode == 'debug' else 18)
+    parser.add_argument('--num_buffers', type=int, default=1 if mode == 'debug' else 6)
     parser.add_argument('--max_weight_sync_delay', type=int, default=300)
     parser.add_argument('--grads_queue_size', type=int, default=25)
     parser.add_argument('--eval_interval', type=int, default=3000)
