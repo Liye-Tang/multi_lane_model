@@ -14,7 +14,7 @@ from collections import OrderedDict
 class Para:
     # reference info
     N = 10
-    REF_RATIO = 8
+    REF_RATIO = 5
     EXPECTED_V = 5
     INIT_UP_INDEX = 200
 
@@ -247,7 +247,7 @@ def plot_lane_with_width(ax, x, y, phi, lane_width):
 
 def judge_point_line_pos(point, k, x_cl, y_cl):  # True for left
     x1, y1 = x_cl, y_cl
-    x2, y2 = x_cl + 1, y_cl + k
+    x2, y2 = x_cl + 1/k, y_cl + 1
     x3, y3, = point
     s = (x1 - x3) * (y2 - y3) - (y1 - y3) * (x2 - x3)
     return s > 0

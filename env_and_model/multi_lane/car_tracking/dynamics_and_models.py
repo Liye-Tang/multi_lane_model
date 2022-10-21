@@ -165,7 +165,7 @@ class MultiLaneModel(object):
                 # true v2l
                 b = tf.cast((obses_closest_point[:, 1] - k * obses_closest_point[:, 0]), dtype=tf.float32)
                 x = (k * ego_points[1] + ego_points[0] - k * b) / (tf.square(k) + 1)
-                y = (k ** 2 * ego_points[1] + k * ego_points[0] + b) / (k ** 2 + 1)
+                y = (tf.square(k) * ego_points[1] + k * ego_points[0] + b) / (tf.square(k) + 1)
                 veh2line_2 = tf.sqrt(tf.square(ego_points[0] - x) + tf.square(ego_points[1] - y))
                 is_left_2 = judge_point_line_pos(ego_points, k, obses_closest_point[:, 0], obses_closest_point[:, 1])
 
