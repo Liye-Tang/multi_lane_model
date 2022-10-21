@@ -187,23 +187,24 @@ class MultiLane(gym.Env):
             goal_phi = np.random.uniform(low=Para.GOAL_PHI_LOW, high=90)
         else:
             goal_phi = np.random.uniform(low=90, high=Para.GOAL_PHI_UP)
-        # self.context = goal_x, goal_y, goal_phi
-        self.context = 0, 80, 90
+        self.context = goal_x, goal_y, goal_phi
+        # self.context = 0, 80, 90
 
     def generate_ego_state(self):
         # init_ref_point_index = np.random.randint(Para.N - 1)
         init_ref_point_index = 0
-        ratio = np.random.random()
-        ref_x, ref_y = (1 - ratio) * self.ref_n_points[:2, init_ref_point_index] + \
-                       ratio * self.ref_n_points[:2, init_ref_point_index + 1]
+        # ratio = np.random.random()
+        # ref_x, ref_y = (1 - ratio) * self.ref_n_points[:2, init_ref_point_index] + \
+        #                ratio * self.ref_n_points[:2, init_ref_point_index + 1]
+        ref_x, ref_y = self.ref_n_points[:2, init_ref_point_index]
         ref_phi, ref_v = self.ref_n_points[2, init_ref_point_index], self.ref_v
         # add some noise
         ego_state = [0] * 6
         # ego_state[3] = ref_x + np.random.uniform(low=-(0.5+self.left_lane)*self.lane_width,
         #                                          high=(0.5+self.right_lane)*self.lane_width)
         # ego_state[4] = ref_y + np.random.uniform(low=-Para.Y_RANGE, high=Para.Y_RANGE)
-        ego_state[3] = ref_x + np.random.uniform(low=-0.5,
-                                                 high=0.5)
+        ego_state[3] = ref_x + np.random.uniform(low=self.lane_width*(0.35+self.left_lane),
+                                                 high=self.lane_width*(0.35+self.right_lane))
         ego_state[4] = ref_y
 
         ego_state[5] = ref_phi + np.random.uniform(low=-10,
@@ -242,10 +243,10 @@ class MultiLane(gym.Env):
 
         # get the base position
         if front:
-            veh_state[0], veh_state[1], veh_state[2] = ref_x, ref_y, 180 - ref_phi
+            veh_state[0], veh_state[1], veh_state[2] = ref_x, ref_y, ref_phi
         else:
             if self.lane_shape:
-                veh_state[0], veh_state[1], veh_state[2] = ref_x, -ref_y, ref_phi
+                veh_state[0], veh_state[1], veh_state[2] = ref_x, -ref_y, 180 - ref_phi
             else:
                 veh_state[0], veh_state[1], veh_state[2] = -ref_x, -ref_y, ref_phi
 
@@ -276,7 +277,7 @@ class MultiLane(gym.Env):
         for i in range(1):
             action = np.array([0, 1/3])
             _, _, _, info = self.step(action)
-            cum_cost += info['veh2veh4training']
+            cum_cost += info['veh2veh4training'] + info['veh2road4training']
         return False if cum_cost > 0 else True
 
     def render(self, mode="human"):
@@ -359,4 +360,4 @@ def test_model():
 
 
 if __name__ == '__main__':
-    test_model()
+    test()

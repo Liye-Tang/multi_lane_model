@@ -171,9 +171,6 @@ class MultiLaneModel(object):
 
                 veh2line = tf.where(tf.abs(k) - 1000 > 0, veh2line_1, veh2line_2)
                 is_left = tf.where(tf.abs(k) - 1000 > 0, is_left_1, is_left_2)
-                # veh2line = veh2line_1
-                # is_left = is_left_1
-
 
                 left_dist = tf.where((0.5 + obses_left_lane[:, 0]) * obses_lane_width[:, 0] - veh2line - 1.25 < 0,
                                      tf.square((0.5 + obses_left_lane[:, 0]) * obses_lane_width[:, 0] - veh2line - 1.25),
